@@ -2,24 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+/**
+ * DatabaseSeeder — titik masuk semua seeder.
+ * Urutan penting: User → Kategori → Lokasi → Pengaduan (ada FK).
+ */
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            UserSeeder::class,     // akun admin, petugas, mahasiswa
+            KategoriSeeder::class, // kategori jenis kerusakan
+            LokasiSeeder::class,   // gedung & ruangan kampus
+            PengaduanSeeder::class,// contoh pengaduan + tanggapan
         ]);
     }
 }

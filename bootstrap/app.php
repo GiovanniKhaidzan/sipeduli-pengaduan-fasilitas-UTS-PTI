@@ -12,7 +12,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        /**
+         * Daftarkan alias middleware 'role' agar bisa dipakai di route.
+         * Contoh: Route::middleware('role:admin') atau middleware('role:admin,petugas')
+         * Ini cara Laravel 13 mendaftarkan middleware (bukan lewat Kernel.php).
+         */
+        $middleware->alias([
+            'role' => \App\Http\Middleware\RoleMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
